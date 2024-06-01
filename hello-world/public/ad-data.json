@@ -4,69 +4,79 @@
     "price": 15000,
     "category": "Спорт и отдых",
     "location": "Москва",
-    "date_posted": "2024-05-01"
+    "date_posted": "2024-05-01",
+    "image": "bicycle.jpg"
   },
   {
     "title": "Сдам однокомнатную квартиру",
     "price": 35000,
     "category": "Недвижимость",
     "location": "Санкт-Петербург",
-    "date_posted": "2024-05-02"
+    "date_posted": "2024-05-02",
+    "image": "apartment.jpg"
   },
   {
     "title": "Куплю ноутбук",
     "price": 50000,
     "category": "Электроника",
     "location": "Новосибирск",
-    "date_posted": "2024-05-03"
+    "date_posted": "2024-05-03",
+    "image": "laptop.jpg"
   },
   {
     "title": "Продам детскую коляску",
     "price": 8000,
     "category": "Детские товары",
     "location": "Екатеринбург",
-    "date_posted": "2024-05-04"
+    "date_posted": "2024-05-04",
+    "image": "baby-stroller.jpg"
   },
   {
     "title": "Аренда офиса в центре",
     "price": 100000,
     "category": "Недвижимость",
     "location": "Казань",
-    "date_posted": "2024-05-05"
+    "date_posted": "2024-05-05",
+    "image": "office.jpg"
   },
   {
     "title": "Продается автомобиль",
     "price": 700000,
     "category": "Транспорт",
     "location": "Нижний Новгород",
-    "date_posted": "2024-05-06"
+    "date_posted": "2024-05-06",
+    "image": "car.jpg"
   },
   {
     "title": "Продам мебель для гостиной",
     "price": 20000,
     "category": "Дом и сад",
     "location": "Челябинск",
-    "date_posted": "2024-05-07"
+    "date_posted": "2024-05-07",
+    "image": "furniture.jpg"
   },
   {
     "title": "Ищу работу программистом",
     "price": 0,
     "category": "Работа",
     "location": "Самара",
-    "date_posted": "2024-05-08"
+    "date_posted": "2024-05-08",
+    "image": "programmer.jpg"
   },
   {
     "title": "Продается участок под застройку",
     "price": 1500000,
     "category": "Недвижимость",
     "location": "Омск",
-    "date_posted": "2024-05-09"
+    "date_posted": "2024-05-09",
+    "image": "region.jpg"
   },
   {
     "title": "Продам игровую приставку",
     "price": 25000,
     "category": "Электроника",
     "location": "Ростов-на-Дону",
-    "date_posted": "2024-05-10"
+    "date_posted": "2024-05-10",
+    "image": "console.jpg"
   }
 ]

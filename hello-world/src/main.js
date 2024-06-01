@@ -4,6 +4,7 @@ import PrimeVue from 'primevue/config';
 import 'primevue/resources/themes/aura-light-green/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.css';
 import 'normalize.css';
 
 const app = createApp(App);
