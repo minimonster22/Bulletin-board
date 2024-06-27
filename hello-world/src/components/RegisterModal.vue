@@ -2,12 +2,13 @@
   <div v-if="isVisible" class="modal">
     <div class="modal-content">
       <span class="close" @click="closeModal">&times;</span>
-      <p class="enter-text">Вход</p>
+      <p class="enter-text">Регистрация</p>
 
       <div class="card flex justify-center input-container">
         <FloatLabel>
           <InputText
-              id="username-input"
+              id="username"
+              class="input"
               v-model="username"
               @focus="onFocus('username')"
               @blur="onBlur('username')"
@@ -17,7 +18,7 @@
         </FloatLabel>
       </div>
 
-      <div class="card flex justify-center password">
+      <div class="card flex justify-center input-container">
         <FloatLabel>
           <Password
               class="custom-password"
@@ -29,7 +30,7 @@
               @blur="onBlur('password')"
           >
             <template #header>
-              <div class="font-semibold text-xm mb-4">Введите пароль</div>
+              <div class="font-semibold text-xm mb-4">Придумайте пароль</div>
             </template>
             <template #footer>
               <Divider/>
@@ -41,11 +42,57 @@
               </ul>
             </template>
           </Password>
-          <label :class="{ active: password || focusedField === 'password' }" class="password-text" for="password">Пароль</label>
+          <label :class="{ active: password || focusedField === 'password' }" class="label-text" for="password">Пароль</label>
 
         </FloatLabel>
       </div>
-      <Button class="submit" label="Войти" size="small" raised :loading="loading" @click="load"/>
+      <div class="card flex justify-center input-container">
+        <FloatLabel>
+          <InputText
+              id="name"
+              class="input"
+              v-model="name"
+              @focus="onFocus('name')"
+              @blur="onBlur('name')"
+          />
+          <label :class="{ active: name || focusedField === 'name' }" class="label-text"
+                 for="name">Имя</label>
+        </FloatLabel>
+      </div>
+      <div class="card flex justify-center input-container">
+        <FloatLabel>
+          <InputText
+              id="city"
+              class="input"
+              v-model="city"
+              @focus="onFocus('city')"
+              @blur="onBlur('city')"
+          />
+          <label :class="{ active: city || focusedField === 'city' }" class="label-text"
+                 for="city">Город</label>
+        </FloatLabel>
+      </div>
+      <div class="card flex justify-center input-container">
+        <FloatLabel>
+          <InputMask
+              id="phone"
+              class="input"
+              v-model="phone"
+              @focus="onFocus('phone')"
+              @blur="onBlur('phone')"
+              mask="+375 (99) 999-99-99"
+              placeholder="+375 (99) 999-99-99"
+          />
+          <label
+              :class="{ active: phone || focusedField === 'phone' }"
+              class="label-text"
+              for="phone"
+          >
+            Телефон
+          </label>
+        </FloatLabel>
+      </div>
+      <Button class="submit" label="Зарегистрироваться" size="small" raised :loading="loading" @click="load"/>
 
     </div>
   </div>
@@ -56,8 +103,9 @@
 import InputText from 'primevue/inputtext';
 import FloatLabel from 'primevue/floatlabel';
 import Password from 'primevue/password';
-
+import InputMask from 'primevue/inputmask';
 import Button from 'primevue/button';
+import Divider from 'primevue/divider';
 
 
 export default {
@@ -66,7 +114,9 @@ export default {
     FloatLabel,
     InputText,
     Password,
-    Button
+    Button,
+    InputMask,
+    Divider,
   },
   props: {
     isVisible: {
@@ -78,6 +128,9 @@ export default {
     return {
       username: '',
       password: '',
+      name: '',
+      city: '',
+      phone: '',
       focusedField: null,
       loading: false
     };
@@ -86,6 +139,9 @@ export default {
     closeModal() {
       this.username = '';
       this.password = '';
+      this.name = '';
+      this.city = '';
+      this.phone = '';
       this.focusedField = null;
       this.$emit('close');
     },
@@ -126,7 +182,6 @@ export default {
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
-  width: 300px;
   text-align: center;
   position: relative;
   gap: 20px
@@ -140,12 +195,12 @@ export default {
   font-size: 20px;
 }
 
-#username-input {
+.input {
   width: 100%;
   font-size: 1.2rem;
 }
 
-.label-text, .password-text {
+.label-text {
   font-size: 1.2rem;
   position: absolute;
   pointer-events: none;
@@ -153,12 +208,15 @@ export default {
   transform-origin: left top;
 }
 
-.input-container, .password {
+.input-container {
   margin-bottom: 1.4rem;
 }
 
-.label-text.active,
-.password-text.active {
+#password {
+  width: 100%;
+}
+
+.label-text.active {
   transform: scale(0.9) translateY(-1px);
 }
 
@@ -173,7 +231,7 @@ export default {
 
 .submit {
   height: 3rem;
-  width: 10rem;
+  width: 15rem;
   font-size: 1.3rem;
 }
 

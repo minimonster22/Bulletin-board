@@ -9,7 +9,8 @@
         <AppMenu v-else :model="guestItems" />
       </div>
     </div>
-    <LoginModal :isVisible="isModalVisible" @close="isModalVisible = false" />
+    <LoginModal :isVisible="isModalLoginVisible" @close="isModalLoginVisible = false" />
+    <RegisterModal :isVisible="isModalRegisterVisible" @close="isModalRegisterVisible = false" />
   </div>
 </template>
 
@@ -17,17 +18,20 @@
 
 
 import LoginModal from './LoginModal.vue';
+import RegisterModal from './RegisterModal.vue';
 
 export default {
   name: 'HeaderBoard',
   components: {
     LoginModal,
+    RegisterModal,
   },
   data() {
     return {
       showMenu: false,
       isAuthenticated: false,
-      isModalVisible: true,
+      isModalRegisterVisible: true,
+      isModalLoginVisible: false,
       authItems: [
         {
           label: 'Profile',
@@ -60,11 +64,12 @@ export default {
         {
           label: 'Войти',
           icon: 'pi pi-sign-in',
-          command: () => { this.isModalVisible = true; }
+          command: () => { this.isModalLoginVisible = true; }
         },
         {
           label: 'Зарегистрироваться',
-          icon: 'pi pi-user-plus'
+          icon: 'pi pi-user-plus',
+          command: () => { this.isModalRegisterVisible = true; }
         }
       ]
     };
