@@ -14,11 +14,13 @@
 
 import AdsField from "@/components/AdsField.vue";
 
+
 export default {
   name: 'MainBoard',
   components: {
 
     AdsField,
+
 
   }
 }

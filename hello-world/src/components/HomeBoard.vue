@@ -11,7 +11,7 @@ export default {
   name: 'HomeBoard',
   components: {
     HeaderBoard,
-    MainBoard
+    MainBoard,
   }
 }
 

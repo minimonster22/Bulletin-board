@@ -1,17 +1,8 @@
 <template>
   <div>
-    <div>
-      <div>Фильтрация по цене:</div>
-      <div>
-        <InputNumber v-model="minPrice" :controls="false" placeholder="Минимальная цена" />
-        <span> - </span>
-        <InputNumber v-model="maxPrice" :controls="false" placeholder="Максимальная цена" />
-        <Button @click="applyPriceFilter" label="Применить" />
-      </div>
-    </div>
     <!-- DataView компонент -->
     <div class="card">
-      <div class="flex justify-content-end">
+      <div class="flex justify-content-end sort">
         <DataViewLayoutOptions v-model="layout"/>
         <Dropdown v-model="sortKey" :options="sortOptions" optionLabel="label" placeholder="Сортировать"
                   @change="onSortChange"/>
@@ -91,7 +82,7 @@
           </template>
         </Column>
         <Column header=" ">
-          <template #body="slotProps">
+          <template #body>
             <Button icon="pi pi-shopping-cart" label="Купить"/>
           </template>
         </Column>
@@ -223,5 +214,9 @@ export default {
 
 .block {
   width: 250px;
+}
+
+.sort {
+  margin-top: 20px
 }
 </style>
