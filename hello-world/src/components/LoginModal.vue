@@ -8,11 +8,11 @@
         <FloatLabel>
           <InputText
               id="username-input"
-              v-model="username"
+              v-model="computedUsername"
               @focus="onFocus('username')"
               @blur="onBlur('username')"
           />
-          <label :class="{ active: username || focusedField === 'username' }" class="label-text"
+          <label :class="{ active: computedUsername || focusedField === 'username' }" class="label-text"
                  for="username">Логин</label>
         </FloatLabel>
       </div>
@@ -23,7 +23,7 @@
               class="custom-password"
               id="password"
               :inputStyle="{ width: '100%' }"
-              v-model="password"
+              v-model="computedPassword"
               toggleMask
               @focus="onFocus('password')"
               @blur="onBlur('password')"
@@ -41,24 +41,21 @@
               </ul>
             </template>
           </Password>
-          <label :class="{ active: password || focusedField === 'password' }" class="password-text" for="password">Пароль</label>
-
+          <label :class="{ active: computedPassword || focusedField === 'password' }" class="password-text" for="password">Пароль</label>
         </FloatLabel>
       </div>
       <Button class="submit" label="Войти" size="small" raised :loading="loading" @click="load"/>
-
     </div>
   </div>
 </template>
 
-
 <script>
+import { mapState, mapActions } from 'vuex';
 import InputText from 'primevue/inputtext';
 import FloatLabel from 'primevue/floatlabel';
 import Password from 'primevue/password';
-
+import Divider from 'primevue/divider';
 import Button from 'primevue/button';
-
 
 export default {
   name: 'LoginModal',
@@ -66,6 +63,7 @@ export default {
     FloatLabel,
     InputText,
     Password,
+    Divider,
     Button
   },
   props: {
@@ -74,34 +72,43 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      username: '',
-      password: '',
-      focusedField: null,
-      loading: false
-    };
+  computed: {
+    ...mapState(['username', 'password', 'focusedField', 'loading']),
+    computedUsername: {
+      get() {
+        return this.username;
+      },
+      set(value) {
+        this.updateUsername(value);
+      }
+    },
+    computedPassword: {
+      get() {
+        return this.password;
+      },
+      set(value) {
+        this.updatePassword(value);
+      }
+    }
   },
   methods: {
+    ...mapActions(['updateUsername', 'updatePassword', 'updateFocusedField', 'login']),
     closeModal() {
-      this.username = '';
-      this.password = '';
-      this.focusedField = null;
+      this.updateUsername('');
+      this.updatePassword('');
+      this.updateFocusedField(null);
       this.$emit('close');
     },
     onFocus(field) {
-      this.focusedField = field;
+      this.updateFocusedField(field);
     },
     onBlur(field) {
       if (this[field] === '') {
-        this.focusedField = null;
+        this.updateFocusedField(null);
       }
     },
     load() {
-      this.loading = true;
-      setTimeout(() => {
-        this.loading = false;
-      }, 2000);
+      this.login();
     }
   }
 };

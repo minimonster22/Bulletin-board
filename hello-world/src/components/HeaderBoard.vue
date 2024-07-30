@@ -1,6 +1,6 @@
 <template>
   <div class="header">
-    <i class="pi pi-warehouse" style="font-size: 2rem"></i>
+    <i class="pi pi-warehouse" style="font-size: 2rem" @click="goToHome"></i>
     <div class="name">Доска объявлений</div>
     <div class="icon-login" @click="toggleMenu">
       <i class="pi pi-user" style="font-size: 2rem"></i>
@@ -10,15 +10,16 @@
       </div>
     </div>
     <LoginModal :isVisible="isModalLoginVisible" @close="isModalLoginVisible = false" />
-    <RegisterModal :isVisible="isModalRegisterVisible" @close="isModalRegisterVisible = false" />
+    <RegisterModal :isVisible="isModalRegisterVisible" @close="isModalRegisterVisible = false" @registrationSuccess="handleRegistrationSuccess" />
+
   </div>
 </template>
 
 <script>
 
-
 import LoginModal from './LoginModal.vue';
 import RegisterModal from './RegisterModal.vue';
+import axios from 'axios';
 
 export default {
   name: 'HeaderBoard',
@@ -30,35 +31,24 @@ export default {
     return {
       showMenu: false,
       isAuthenticated: false,
-      isModalRegisterVisible: true,
+      isModalRegisterVisible: false,
       isModalLoginVisible: false,
       authItems: [
         {
           label: 'Profile',
           items: [
             {
-              label: 'Настройки',
-              icon: 'pi pi-cog'
+              label: 'Личный кабинет',
+              icon: 'pi pi-cog',
+              command: this.goToUserProfile // Не используется в data()
             },
             {
               label: 'Выйти',
-              icon: 'pi pi-sign-out'
+              icon: 'pi pi-sign-out',
+              command: this.logout
             }
           ]
         },
-        {
-          label: 'Documents',
-          items: [
-            {
-              label: 'New',
-              icon: 'pi pi-plus'
-            },
-            {
-              label: 'Search',
-              icon: 'pi pi-search'
-            }
-          ]
-        }
       ],
       guestItems: [
         {
@@ -77,7 +67,32 @@ export default {
   methods: {
     toggleMenu() {
       this.showMenu = !this.showMenu;
+    },
+    goToUserProfile() {
+      this.$router.push('/user-profile');
+    },
+    goToHome() {
+      this.$router.push('/');
+    },
+    handleRegistrationSuccess() {
+      this.isAuthenticated = true;
+    },
+    async checkAuth() {
+      try {
+        const response = await axios.get('http://localhost:3000/check-auth');
+        console.log('Auth response:', JSON.stringify(response.data, null, 2));
+        this.isAuthenticated = response.data.isAuthenticated;
+      } catch (error) {
+        console.error('Error checking auth status:', error);
+      }
+    },
+    logout() {
+      this.isAuthenticated = false;
+      axios.post('http://localhost:3000/logout');
     }
+  },
+  mounted() {
+    this.checkAuth();
   }
 }
 </script>
@@ -109,5 +124,7 @@ export default {
   border: 1px solid #ccc;
 }
 
-/* Добавьте дополнительные стили по необходимости */
+.pi-warehouse {
+  cursor:pointer;
+}
 </style>

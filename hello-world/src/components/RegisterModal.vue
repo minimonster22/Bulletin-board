@@ -92,8 +92,8 @@
           </label>
         </FloatLabel>
       </div>
-      <Button class="submit" label="Зарегистрироваться" size="small" raised :loading="loading" @click="load"/>
-
+      <Button class="submit" label="Зарегистрироваться" size="small" raised :loading="loading" @click="registerUser"/>
+      <div v-if="message" class="message">{{ message }}</div>
     </div>
   </div>
 </template>
@@ -106,10 +106,11 @@ import Password from 'primevue/password';
 import InputMask from 'primevue/inputmask';
 import Button from 'primevue/button';
 import Divider from 'primevue/divider';
+import axios from 'axios';
 
 
 export default {
-  name: 'LoginModal',
+  name: 'RegisterModal',
   components: {
     FloatLabel,
     InputText,
@@ -132,7 +133,9 @@ export default {
       city: '',
       phone: '',
       focusedField: null,
-      loading: false
+      loading: false,
+      message: '',
+      isAuthenticated: false,
     };
   },
   methods: {
@@ -143,6 +146,7 @@ export default {
       this.city = '';
       this.phone = '';
       this.focusedField = null;
+      this.message = '';
       this.$emit('close');
     },
     onFocus(field) {
@@ -153,11 +157,35 @@ export default {
         this.focusedField = null;
       }
     },
-    load() {
+    async registerUser() {
       this.loading = true;
-      setTimeout(() => {
+      try {
+        const response = await axios.post('http://localhost:3000/register', {
+          username: this.username,
+          password: this.password,
+          name: this.name,
+          city: this.city,
+          phone: this.phone
+        });
+        this.message = response.data; // Сообщение от сервера
+        this.closeModal(); // Закрыть модальное окно после успешной регистрации
+        this.isAuthenticated = true;
+        this.$emit('registrationSuccess'); // Добавлено
+        alert('Регистрация прошла успешно');
+      } catch (error) {
+        if (error.response) {
+          this.message = `Error: ${error.response.data}`;
+          alert(`Ошибка: ${error.response.data}`);
+        } else if (error.request) {
+          this.message = 'No response received from server';
+          alert('Нет ответа от сервера');
+        } else {
+          this.message = `Error: ${error.message}`;
+          alert(`Ошибка: ${error.message}`);
+        }
+      } finally {
         this.loading = false;
-      }, 2000);
+      }
     }
   }
 };
