@@ -44,7 +44,7 @@
           <label :class="{ active: computedPassword || focusedField === 'password' }" class="password-text" for="password">Пароль</label>
         </FloatLabel>
       </div>
-      <Button class="submit" label="Войти" size="small" raised :loading="loading" @click="load"/>
+      <Button class="submit" label="Войти" size="small" raised :loading="loading" @click="loginUser"/>
     </div>
   </div>
 </template>
@@ -56,6 +56,7 @@ import FloatLabel from 'primevue/floatlabel';
 import Password from 'primevue/password';
 import Divider from 'primevue/divider';
 import Button from 'primevue/button';
+import axios from 'axios';
 
 export default {
   name: 'LoginModal',
@@ -92,7 +93,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['updateUsername', 'updatePassword', 'updateFocusedField', 'login']),
+    ...mapActions(['updateUsername', 'updatePassword', 'updateFocusedField', 'updateAuthenticationStatus']),
     closeModal() {
       this.updateUsername('');
       this.updatePassword('');
@@ -107,8 +108,21 @@ export default {
         this.updateFocusedField(null);
       }
     },
-    load() {
-      this.login();
+    async loginUser() {
+      try {
+        const response = await axios.post('http://localhost:3000/login', {
+          username: this.computedUsername,
+          password: this.computedPassword
+        });
+        console.log('Login response:', response.data);
+        this.updateAuthenticationStatus(true);
+        this.closeModal();
+        this.isAuthenticated = true;
+        this.$emit('loginSuccess');
+      } catch (error) {
+        console.error('Login error:', error);
+        alert('Неверный логин или пароль');
+      }
     }
   }
 };

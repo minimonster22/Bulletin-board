@@ -9,7 +9,7 @@
         <AppMenu v-else :model="guestItems" />
       </div>
     </div>
-    <LoginModal :isVisible="isModalLoginVisible" @close="isModalLoginVisible = false" />
+    <LoginModal :isVisible="isModalLoginVisible" @close="isModalLoginVisible = false" @loginSuccess="handleLoginSuccess"/>
     <RegisterModal :isVisible="isModalRegisterVisible" @close="isModalRegisterVisible = false" @registrationSuccess="handleRegistrationSuccess" />
 
   </div>
@@ -40,7 +40,7 @@ export default {
             {
               label: 'Личный кабинет',
               icon: 'pi pi-cog',
-              command: this.goToUserProfile // Не используется в data()
+              command: this.goToUserProfile
             },
             {
               label: 'Выйти',
@@ -75,6 +75,9 @@ export default {
       this.$router.push('/');
     },
     handleRegistrationSuccess() {
+      this.isAuthenticated = true;
+    },
+    handleLoginSuccess() {
       this.isAuthenticated = true;
     },
     async checkAuth() {

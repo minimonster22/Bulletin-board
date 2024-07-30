@@ -167,10 +167,10 @@ export default {
           city: this.city,
           phone: this.phone
         });
-        this.message = response.data; // Сообщение от сервера
-        this.closeModal(); // Закрыть модальное окно после успешной регистрации
+        this.message = response.data;
+        this.closeModal();
         this.isAuthenticated = true;
-        this.$emit('registrationSuccess'); // Добавлено
+        this.$emit('registrationSuccess');
         alert('Регистрация прошла успешно');
       } catch (error) {
         if (error.response) {

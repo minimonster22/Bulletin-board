@@ -37,17 +37,6 @@ db.serialize(() => {
     )`);
 });
 
-app.post('/test', (req, res) => {
-    req.session.isAuthenticated = true;
-    console.log('Session created:', req.session);
-
-    // Добавляем заголовок Set-Cookie вручную
-    res.setHeader('Set-Cookie', `connect.sid=${req.sessionID}; HttpOnly; Path=/; SameSite=None;`);
-
-    res.send('Session set');
-});
-
-
 app.post('/register', async (req, res) => {
     const { username, password, name, city, phone } = req.body;
 
@@ -80,6 +69,38 @@ app.post('/register', async (req, res) => {
     } catch (err) {
         console.error('Catch error:', err);
         res.status(500).send('Server error');
+    }
+});
+
+app.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    if (!username || !password) {
+        return res.status(400).send('Логин и пароль обязательны');
+    }
+
+    try {
+        db.get(`SELECT * FROM users WHERE username = ?`, [username], async (err, row) => {
+            if (err) {
+                console.error('Database error:', err);
+                return res.status(500).send('Ошибка сервера');
+            }
+            if (!row) {
+                return res.status(401).send('Неверный логин или пароль');
+            }
+
+            const match = await bcrypt.compare(password, row.password);
+            if (!match) {
+                return res.status(401).send('Неверный логин или пароль');
+            }
+
+            req.session.isAuthenticated = true;
+            console.log('Session after login:', req.session);
+            res.status(200).send('Успешно вошли');
+        });
+    } catch (err) {
+        console.error('Catch error:', err);
+        res.status(500).send('Ошибка сервера');
     }
 });
 
