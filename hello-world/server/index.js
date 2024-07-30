@@ -95,6 +95,7 @@ app.post('/login', async (req, res) => {
             }
 
             req.session.isAuthenticated = true;
+            req.session.user = { username: row.username }; // Добавляем пользователя в сессию
             console.log('Session after login:', req.session);
             res.status(200).send('Успешно вошли');
         });
@@ -128,6 +129,53 @@ app.post('/logout', (req, res) => {
         }
     });
 });
+
+app.get('/api/user-info', (req, res) => {
+    if (req.session && req.session.isAuthenticated && req.session.user) {
+        db.get(`SELECT username, name, city, phone FROM users WHERE username = ?`, [req.session.user.username], (err, row) => {
+            if (err) {
+                console.error('Database error:', err);
+                return res.status(500).send('Server error');
+            }
+            if (row) {
+                res.json({
+                    username: row.username,
+                    name: row.name, // Убедитесь, что имя также извлекается
+                    city: row.city,
+                    phone: row.phone
+                });
+            } else {
+                res.status(401).json({ message: 'User not found' });
+            }
+        });
+    } else {
+        res.status(401).json({ message: 'Not authenticated' });
+    }
+});
+
+app.post('/api/update-user-info', (req, res) => {
+    const { name, city, phone } = req.body;
+
+    if (!req.session || !req.session.isAuthenticated || !req.session.user) {
+        return res.status(401).json({ message: 'Not authenticated' });
+    }
+
+    db.run(
+        `UPDATE users SET name = ?, city = ?, phone = ? WHERE username = ?`,
+        [name, city, phone, req.session.user.username],
+        function (err) {
+            if (err) {
+                console.error('Database error:', err);
+                return res.status(500).send('Server error');
+            }
+
+            res.status(200).json({ message: 'User info updated' });
+        }
+    );
+});
+
+
+
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
