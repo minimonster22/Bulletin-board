@@ -6,6 +6,9 @@ import ToastService from 'primevue/toastservice';
 import store from './store';
 import axios from 'axios';
 
+import FileUpload from 'primevue/fileupload';
+import AppToast  from 'primevue/toast';
+
 import 'primevue/resources/themes/aura-light-green/theme.css';
 import 'primevue/resources/primevue.min.css';
 import 'primeicons/primeicons.css';
@@ -20,5 +23,6 @@ app.use(store);
 app.use(router);
 app.use(ToastService);
 app.component('AppMenu', AppMenu);
-
+app.component('FileUpload', FileUpload);
+app.component('AppToast', AppToast);
 app.mount('#app');

@@ -7,11 +7,13 @@ const session = require('express-session');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const { v4: uuidv4 } = require('uuid');
 
 const app = express();
 const db = new sqlite3.Database('users.db');
 
-const pathToUploads = path.resolve(__dirname, '../src/uploads/');
+const adsFilePath = path.join(__dirname, '../public/ad-data.json');
+const pathToUploads = path.resolve(__dirname, '../src/assets/jpg/');
 if (!fs.existsSync(pathToUploads)) {
     fs.mkdirSync(pathToUploads, { recursive: true });
 }
@@ -71,6 +73,7 @@ app.post('/register', async (req, res) => {
                         return res.status(500).send('Server error');
                     }
                     req.session.isAuthenticated = true;
+                    req.session.user = { username: username };
                     console.log('Session after registration:', req.session);
                     res.status(201).send('User registered');
                 });
@@ -187,7 +190,8 @@ const storage = multer.diskStorage({
         cb(null, pathToUploads);
     },
     filename: function (req, file, cb) {
-        cb(null, Date.now() + path.extname(file.originalname));
+        const uniqueName = `${uuidv4()}${path.extname(file.originalname)}`;
+        cb(null, uniqueName);
     }
 });
 
@@ -199,7 +203,48 @@ app.post('/api/upload', upload.single('demo'), (req, res) => {
         return res.status(400).send('No file uploaded.');
     }
     console.log('File uploaded successfully:', req.file);
-    res.status(200).send('File uploaded successfully.');
+    res.status(200).send(req.file.filename);
+});
+
+app.post('/api/ads', (req, res) => {
+    const newAd = req.body;
+
+    if (!req.session || !req.session.isAuthenticated || !req.session.user) {
+        return res.status(401).send('Not authenticated');
+    }
+
+    const adWithUser = {
+        ...newAd,
+        user: req.session.user.username
+    };
+
+    fs.readFile(adsFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Ошибка чтения файла:', err);
+            return res.status(500).send('Ошибка сервера');
+        }
+
+        let ads = [];
+        if (data) {
+            try {
+                ads = JSON.parse(data);
+            } catch (parseErr) {
+                console.error('Ошибка парсинга JSON:', parseErr);
+                return res.status(500).send('Ошибка сервера');
+            }
+        }
+
+        ads.push(adWithUser);
+
+        fs.writeFile(adsFilePath, JSON.stringify(ads, null, 2), 'utf8', (writeErr) => {
+            if (writeErr) {
+                console.error('Ошибка записи файла:', writeErr);
+                return res.status(500).send('Ошибка сервера');
+            }
+
+            res.status(201).send('Объявление добавлено');
+        });
+    });
 });
 
 

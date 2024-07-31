@@ -1,5 +1,6 @@
 [
   {
+    "user": "unknown",
     "title": "Продам велосипед",
     "price": 540,
     "category": "Спорт и отдых",
@@ -8,6 +9,7 @@
     "image": "bicycle.jpg"
   },
   {
+    "user": "unknown",
     "title": "Сдам однокомнатную квартиру",
     "price": 500,
     "category": "Недвижимость",
@@ -16,6 +18,7 @@
     "image": "apartment.jpg"
   },
   {
+    "user": "unknown",
     "title": "Куплю ноутбук",
     "price": 1500,
     "category": "Электроника",
@@ -24,6 +27,7 @@
     "image": "laptop.jpg"
   },
   {
+    "user": "unknown",
     "title": "Продам детскую коляску",
     "price": 950,
     "category": "Детские товары",
@@ -32,6 +36,7 @@
     "image": "baby-stroller.jpg"
   },
   {
+    "user": "unknown",
     "title": "Аренда офиса в центре",
     "price": 2000,
     "category": "Недвижимость",
@@ -40,6 +45,7 @@
     "image": "office.jpg"
   },
   {
+    "user": "unknown",
     "title": "Продается автомобиль",
     "price": 14000,
     "category": "Транспорт",
@@ -48,6 +54,7 @@
     "image": "car.jpg"
   },
   {
+    "user": "unknown",
     "title": "Продам мебель для гостиной",
     "price": 2300,
     "category": "Дом и сад",
@@ -56,6 +63,7 @@
     "image": "furniture.jpg"
   },
   {
+    "user": "unknown",
     "title": "Ищу работу программистом",
     "price": 5000,
     "category": "Работа",
@@ -64,6 +72,7 @@
     "image": "programmer.jpg"
   },
   {
+    "user": "unknown",
     "title": "Продается участок под застройку",
     "price": 80000,
     "category": "Недвижимость",
@@ -72,6 +81,7 @@
     "image": "region.jpg"
   },
   {
+    "user": "unknown",
     "title": "Продам игровую приставку",
     "price": 450,
     "category": "Электроника",
