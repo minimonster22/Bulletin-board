@@ -24,7 +24,9 @@
                   <div class="flex flex-row justify-content-between align-items-start gap-2">
                     <div>
                       <span class="font-medium text-secondary text-sm">{{ item.location }}</span>
-                      <div class="text-lg font-medium text-900 mt-1">{{ item.title }}</div>
+                      <router-link :to="`/ad/${item.id}`" class="text-lg font-medium text-900 mt-1">
+                        {{ item.title }} (ID: {{ item.id }})
+                      </router-link>
                     </div>
                     <div class="surface-100 p-1" style="border-radius: 30px">
                       <div class="surface-0 flex align-items-center gap-2 justify-content-center py-1 px-2"
@@ -58,6 +60,9 @@
           </template>
         </Column>
         <Column field="title" header="Название" :showFilterMenu="false">
+          <template #body="slotProps">
+            <router-link :to="`/ad/${slotProps.data.id}`">{{ slotProps.data.title }}</router-link>
+          </template>
           <template #filter="{ filterModel, filterCallback }">
             <InputText v-model="filterModel.value" @input="filterCallback()" placeholder="Искать по названию"/>
           </template>
