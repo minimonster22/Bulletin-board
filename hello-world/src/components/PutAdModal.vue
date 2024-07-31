@@ -4,37 +4,45 @@
       <span class="close" @click="closeModal">&times;</span>
       <p class="enter-text">Подать объявление</p>
       <form @submit.prevent="submitAd">
-        <div>
-          <label for="title">Заголовок</label>
-          <input v-model="newAd.title" id="title" type="text" required />
+        <div class="input-ad">
+          <label for="title">Название товара или услуги</label>
+          <InputText v-model="newAd.title" id="title" type="text" required />
         </div>
-        <div>
+        <div class="input-ad">
           <label for="price">Цена</label>
-          <input v-model="newAd.price" id="price" type="number" required />
+          <InputNumber v-model="newAd.price" id="price" inputId="integeronly" fluid  />
         </div>
-        <div>
+        <div class="input-ad">
           <label for="category">Категория</label>
-          <input v-model="newAd.category" id="category" type="text" required />
+          <InputText v-model="newAd.category" id="category" type="text" required />
         </div>
-        <div>
+        <div class="input-ad">
           <label for="location">Местоположение</label>
-          <input v-model="newAd.location" id="location" type="text" required />
+          <InputText v-model="newAd.location" id="location" type="text" required />
         </div>
-        <div class="card flex justify-center">
+        <div class="card flex justify-center upload-file">
           <FileUpload mode="basic" name="demo" url="http://localhost:3000/api/upload" accept="image/*" :maxFileSize="1000000"
                       @upload="onUpload" :auto="true" chooseLabel="Browse" />
         </div>
-        <button type="submit">Отправить</button>
+        <Button type="submit">Отправить</Button>
       </form>
     </div>
   </div>
 </template>
 
 <script>
+import Button from 'primevue/button';
 import axios from 'axios';
+import InputText from 'primevue/inputtext';
+import InputNumber from 'primevue/inputnumber';
 
 export default {
   name: "PutAdModal",
+  components: {
+    Button,
+    InputText,
+    InputNumber
+  },
   props: {
     isVisible: {
       type: Boolean,
@@ -80,8 +88,30 @@ export default {
   background-color: #fff;
   padding: 20px;
   border-radius: 5px;
-  width: 300px;
+  width: max-content;
   text-align: center;
   position: relative;
 }
+
+.upload-file {
+  margin: 10px;
+}
+
+
+label {
+  margin-right: 1vw;
+  align-content:center;
+}
+.enter-text {
+  font-weight: bold;
+  font-size:1.2rem;
+}
+
+.input-ad {
+  display:flex;
+  justify-content: space-between;
+  margin-bottom: 1vh;
+}
+
+
 </style>
