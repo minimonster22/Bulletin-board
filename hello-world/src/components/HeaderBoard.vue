@@ -19,7 +19,7 @@
 
 import LoginModal from './LoginModal.vue';
 import RegisterModal from './RegisterModal.vue';
-import axios from 'axios';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'HeaderBoard',
@@ -30,7 +30,6 @@ export default {
   data() {
     return {
       showMenu: false,
-      isAuthenticated: false,
       isModalRegisterVisible: false,
       isModalLoginVisible: false,
       authItems: [
@@ -64,7 +63,11 @@ export default {
       ]
     };
   },
+  computed: {
+    ...mapState(['isAuthenticated'])
+  },
   methods: {
+    ...mapActions(['checkAuth', 'logout']),
     toggleMenu() {
       this.showMenu = !this.showMenu;
     },
@@ -75,23 +78,12 @@ export default {
       this.$router.push('/');
     },
     handleRegistrationSuccess() {
-      this.isAuthenticated = true;
+      this.isModalRegisterVisible = false;
+      this.checkAuth();
     },
     handleLoginSuccess() {
-      this.isAuthenticated = true;
-    },
-    async checkAuth() {
-      try {
-        const response = await axios.get('http://localhost:3000/check-auth');
-        console.log('Auth response:', JSON.stringify(response.data, null, 2));
-        this.isAuthenticated = response.data.isAuthenticated;
-      } catch (error) {
-        console.error('Error checking auth status:', error);
-      }
-    },
-    logout() {
-      this.isAuthenticated = false;
-      axios.post('http://localhost:3000/logout');
+      this.isModalLoginVisible = false;
+      this.checkAuth();
     }
   },
   mounted() {

@@ -4,9 +4,17 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const cors = require('cors');
 const session = require('express-session');
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
 
 const app = express();
 const db = new sqlite3.Database('users.db');
+
+const pathToUploads = path.resolve(__dirname, '../src/uploads/');
+if (!fs.existsSync(pathToUploads)) {
+    fs.mkdirSync(pathToUploads, { recursive: true });
+}
 
 app.use(cors({ credentials: true, origin: 'http://localhost:8080' }));
 app.use(bodyParser.json());
@@ -17,10 +25,11 @@ app.use(session({
     saveUninitialized: false,
     cookie: {
         secure: false,
-        sameSite: 'Lax', // ПОМОГЛО ЧТОБЫ ВЕРНО ПЕРЕДАВАЛСЯ isAuthenticated
+        sameSite: 'Lax',
         maxAge: 1000 * 60 * 60
     }
 }));
+
 app.use((req, res, next) => {
     console.log('Session:', req.session);
     next();
@@ -95,7 +104,7 @@ app.post('/login', async (req, res) => {
             }
 
             req.session.isAuthenticated = true;
-            req.session.user = { username: row.username }; // Добавляем пользователя в сессию
+            req.session.user = { username: row.username };
             console.log('Session after login:', req.session);
             res.status(200).send('Успешно вошли');
         });
@@ -104,7 +113,6 @@ app.post('/login', async (req, res) => {
         res.status(500).send('Ошибка сервера');
     }
 });
-
 
 app.get('/users', (req, res) => {
     db.all('SELECT * FROM users', [], (err, rows) => {
@@ -140,7 +148,7 @@ app.get('/api/user-info', (req, res) => {
             if (row) {
                 res.json({
                     username: row.username,
-                    name: row.name, // Убедитесь, что имя также извлекается
+                    name: row.name,
                     city: row.city,
                     phone: row.phone
                 });
@@ -174,7 +182,25 @@ app.post('/api/update-user-info', (req, res) => {
     );
 });
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, pathToUploads);
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
 
+const upload = multer({ storage: storage });
+
+app.post('/api/upload', upload.single('demo'), (req, res) => {
+    if (!req.file) {
+        console.log('No file uploaded.');
+        return res.status(400).send('No file uploaded.');
+    }
+    console.log('File uploaded successfully:', req.file);
+    res.status(200).send('File uploaded successfully.');
+});
 
 
 const PORT = process.env.PORT || 3000;

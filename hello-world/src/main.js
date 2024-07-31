@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import PrimeVue from 'primevue/config';
 import AppMenu from 'primevue/menu';
+import ToastService from 'primevue/toastservice';
 import store from './store';
 import axios from 'axios';
 
@@ -16,7 +17,8 @@ const app = createApp(App);
 axios.defaults.withCredentials = true;
 app.use(PrimeVue);
 app.use(store);
-app.use(router)
+app.use(router);
+app.use(ToastService);
 app.component('AppMenu', AppMenu);
 
 app.mount('#app');

@@ -216,7 +216,4 @@ export default {
   width: 250px;
 }
 
-.sort {
-  margin-top: 20px
-}
 </style>
