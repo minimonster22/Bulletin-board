@@ -14,7 +14,7 @@
         </div>
         <div class="input-ad">
           <label for="category">Категория</label>
-          <InputText v-model="newAd.category" id="category" type="text" required />
+          <Dropdown v-model="newAd.category" :options="categoryOptions" optionLabel="label" optionValue="value" placeholder="Выберите категорию" required />
         </div>
         <div class="input-ad">
           <label for="location">Местоположение</label>
@@ -39,6 +39,7 @@ import InputText from 'primevue/inputtext';
 import InputNumber from 'primevue/inputnumber';
 import Editor from "primevue/editor";
 import FileUpload from 'primevue/fileupload';
+import Dropdown from 'primevue/dropdown';
 
 export default {
   name: "PutAdModal",
@@ -47,7 +48,8 @@ export default {
     InputText,
     InputNumber,
     Editor,
-    FileUpload
+    FileUpload,
+    Dropdown
   },
   props: {
     isVisible: {
@@ -65,7 +67,8 @@ export default {
         date_posted: new Date().toISOString().split('T')[0],
         image: '',
         description: ''
-      }
+      },
+      categoryOptions: []
     };
   },
   methods: {
@@ -85,7 +88,24 @@ export default {
         console.error('Error submitting ad:', error);
         this.$toast.add({ severity: 'error', summary: 'Error', detail: 'Failed to submit ad', life: 3000 });
       }
+    },
+    fetchCategoryOptions() {
+      axios.get('/ad-data.json')
+          .then(response => {
+            const ads = response.data;
+            const categories = [...new Set(ads.map(ad => ad.category))];
+            this.categoryOptions = categories.map(category => ({
+              label: category,
+              value: category
+            }));
+          })
+          .catch(error => {
+            console.error('Ошибка при загрузке категорий:', error);
+          });
     }
+  },
+  mounted() {
+    this.fetchCategoryOptions();
   }
 }
 </script>

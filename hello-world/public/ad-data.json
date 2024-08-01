@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "user": "unknown",
+    "user": "Леонид",
     "title": "Продам велосипед",
     "price": 540,
     "category": "Спорт и отдых",
@@ -12,7 +12,7 @@
   },
   {
     "id": 2,
-    "user": "unknown",
+    "user": "Вениамин",
     "title": "Сдам однокомнатную квартиру",
     "price": 500,
     "category": "Недвижимость",
@@ -23,7 +23,7 @@
   },
   {
     "id": 3,
-    "user": "unknown",
+    "user": "Даздраперма",
     "title": "Куплю ноутбук",
     "price": 1500,
     "category": "Электроника",
@@ -34,7 +34,7 @@
   },
   {
     "id": 4,
-    "user": "unknown",
+    "user": "Пофистал",
     "title": "Продам детскую коляску",
     "price": 950,
     "category": "Детские товары",
@@ -45,7 +45,7 @@
   },
   {
     "id": 5,
-    "user": "unknown",
+    "user": "Тролебузина",
     "title": "Аренда офиса в центре",
     "price": 2000,
     "category": "Недвижимость",
@@ -56,7 +56,7 @@
   },
   {
     "id": 6,
-    "user": "unknown",
+    "user": "Владилен",
     "title": "Продается автомобиль",
     "price": 14000,
     "category": "Транспорт",
@@ -67,7 +67,7 @@
   },
   {
     "id": 7,
-    "user": "unknown",
+    "user": "Гертруда",
     "title": "Продам мебель для гостиной",
     "price": 2300,
     "category": "Дом и сад",
@@ -78,7 +78,7 @@
   },
   {
     "id": 8,
-    "user": "unknown",
+    "user": "Люблен",
     "title": "Ищу работу программистом",
     "price": 5000,
     "category": "Работа",
@@ -89,7 +89,7 @@
   },
   {
     "id": 9,
-    "user": "unknown",
+    "user": "Юралга",
     "title": "Продается участок под застройку",
     "price": 80000,
     "category": "Недвижимость",
@@ -100,7 +100,7 @@
   },
   {
     "id": 10,
-    "user": "unknown",
+    "user": "Ясленик",
     "title": "Продам игровую приставку",
     "price": 450,
     "category": "Электроника",
@@ -111,34 +111,13 @@
   },
   {
     "id": 11,
-    "title": "56+5",
-    "price": 5465411,
-    "category": "asdfsadf4654",
-    "location": "asdfsadf",
+    "title": "рекркр",
+    "price": 456,
+    "category": "вапып",
+    "location": "фывавфыа",
     "date_posted": "2024-08-01",
-    "image": "d4ccbc03-8cc2-4d73-9765-b2f411b558b9.jpg",
-    "user": "tytyty"
-  },
-  {
-    "id": 12,
-    "title": "урури",
-    "price": 8774964,
-    "category": "фывпфывп",
-    "location": "agfsdadfg",
-    "date_posted": "2024-08-01",
-    "image": "61983b74-660e-44a3-9509-e81a1d3bc3b6.jpg",
-    "description": "<p>agasdgasg</p>",
-    "user": "tytyty"
-  },
-  {
-    "id": 13,
-    "title": "sdfsdaf",
-    "price": 23165,
-    "category": "sfdgdfsg",
-    "location": "asdfsdaf",
-    "date_posted": "2024-08-01",
-    "image": "091aa4a7-be33-4422-a94a-182819ad6f89.jpg",
-    "description": "<p>asdfasdf</p>",
+    "image": "c6d6caae-d3eb-4949-9ae7-6c72be533924.jpg",
+    "description": "<p>sadfasdf</p>",
     "user": "tytyty"
   }
 ]
