@@ -9,7 +9,8 @@
     "date_posted": "2024-05-01",
     "image": "bicycle.jpg"
   },
-  {"id": 2,
+  {
+    "id": 2,
     "user": "unknown",
     "title": "Сдам однокомнатную квартиру",
     "price": 500,
@@ -97,5 +98,37 @@
     "location": "Ростов-на-Дону",
     "date_posted": "2024-05-10",
     "image": "console.jpg"
+  },
+  {
+    "id": 11,
+    "title": "asdfasdf",
+    "price": 546541,
+    "category": "asdfsadf",
+    "location": "asdfsadf",
+    "date_posted": "2024-08-01",
+    "image": "d4ccbc03-8cc2-4d73-9765-b2f411b558b9.jpg",
+    "user": "tytyty"
+  },
+  {
+    "id": 12,
+    "title": "урури",
+    "price": 8774964,
+    "category": "фывпфывп",
+    "location": "agfsdadfg",
+    "date_posted": "2024-08-01",
+    "image": "61983b74-660e-44a3-9509-e81a1d3bc3b6.jpg",
+    "description": "<p>agasdgasg</p>",
+    "user": "tytyty"
+  },
+  {
+    "id": 13,
+    "title": "фывпфып",
+    "price": 46542,
+    "category": "фывава",
+    "location": "4894",
+    "date_posted": "2024-08-01",
+    "image": "091aa4a7-be33-4422-a94a-182819ad6f89.jpg",
+    "description": "<p><strong>gasdgи </strong><u>авпивиа </u><em>sdgfsadfg</em></p>",
+    "user": "tytyty"
   }
 ]

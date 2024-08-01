@@ -5,6 +5,7 @@ import AppMenu from 'primevue/menu';
 import ToastService from 'primevue/toastservice';
 import store from './store';
 import axios from 'axios';
+import 'quill/dist/quill.snow.css';
 
 import FileUpload from 'primevue/fileupload';
 import AppToast  from 'primevue/toast';

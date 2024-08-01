@@ -3,8 +3,9 @@
   <div>
     <h1 v-if="ad">{{ ad.title }}</h1>
     <img v-if="ad" :src="getImageUrl(ad.image)" :alt="ad.title" />
-    <p v-if="ad">{{ ad.description }}</p>
-    <span v-if="ad">{{ ad.price }} Br</span>
+    <div v-if="ad" v-html="ad.description"></div>
+    <span v-if="ad" >{{ ad.price }} Br</span>
+    <span v-if="ad" >{{ ad.user }} </span>
     <p v-else>Загрузка...</p>
   </div>
 </template>

@@ -13,9 +13,13 @@ const app = express();
 const db = new sqlite3.Database('users.db');
 
 const adsFilePath = path.join(__dirname, '../public/ad-data.json');
+const lastIdFilePath = path.join(__dirname, '../server/lastId.txt');
 const pathToUploads = path.resolve(__dirname, '../src/assets/jpg/');
 if (!fs.existsSync(pathToUploads)) {
     fs.mkdirSync(pathToUploads, { recursive: true });
+}
+if (!fs.existsSync(lastIdFilePath)) {
+    fs.writeFileSync(lastIdFilePath, '0', 'utf8');
 }
 
 app.use(cors({ credentials: true, origin: 'http://localhost:8080' }));
@@ -213,36 +217,54 @@ app.post('/api/ads', (req, res) => {
         return res.status(401).send('Not authenticated');
     }
 
-    const adWithUser = {
-        ...newAd,
-        user: req.session.user.username
-    };
-
-    fs.readFile(adsFilePath, 'utf8', (err, data) => {
+    fs.readFile(lastIdFilePath, 'utf8', (err, data) => {
         if (err) {
-            console.error('Ошибка чтения файла:', err);
+            console.error('Ошибка чтения файла с последним ID:', err);
             return res.status(500).send('Ошибка сервера');
         }
 
-        let ads = [];
-        if (data) {
-            try {
-                ads = JSON.parse(data);
-            } catch (parseErr) {
-                console.error('Ошибка парсинга JSON:', parseErr);
-                return res.status(500).send('Ошибка сервера');
-            }
-        }
+        let lastId = parseInt(data, 10) || 10;
+        const newId = lastId + 1;
 
-        ads.push(adWithUser);
-
-        fs.writeFile(adsFilePath, JSON.stringify(ads, null, 2), 'utf8', (writeErr) => {
+        fs.writeFile(lastIdFilePath, newId.toString(), 'utf8', (writeErr) => {
             if (writeErr) {
-                console.error('Ошибка записи файла:', writeErr);
+                console.error('Ошибка записи файла с последним ID:', writeErr);
                 return res.status(500).send('Ошибка сервера');
             }
 
-            res.status(201).send('Объявление добавлено');
+            const adWithUser = {
+                id: newId,
+                ...newAd,
+                user: req.session.user.username
+            };
+
+            fs.readFile(adsFilePath, 'utf8', (readErr, fileData) => {
+                if (readErr) {
+                    console.error('Ошибка чтения файла:', readErr);
+                    return res.status(500).send('Ошибка сервера');
+                }
+
+                let ads = [];
+                if (fileData) {
+                    try {
+                        ads = JSON.parse(fileData);
+                    } catch (parseErr) {
+                        console.error('Ошибка парсинга JSON:', parseErr);
+                        return res.status(500).send('Ошибка сервера');
+                    }
+                }
+
+                ads.push(adWithUser);
+
+                fs.writeFile(adsFilePath, JSON.stringify(ads, null, 2), 'utf8', (writeAdsErr) => {
+                    if (writeAdsErr) {
+                        console.error('Ошибка записи файла:', writeAdsErr);
+                        return res.status(500).send('Ошибка сервера');
+                    }
+
+                    res.status(201).send('Объявление добавлено');
+                });
+            });
         });
     });
 });

@@ -27,6 +27,7 @@
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
     "primevue": "^3.52.0",
+    "quill": "^2.0.2",
     "session-file-store": "^1.5.0",
     "sqlite3": "^5.1.7",
     "uuid": "^10.0.0",

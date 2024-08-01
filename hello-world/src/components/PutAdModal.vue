@@ -20,10 +20,12 @@
           <label for="location">Местоположение</label>
           <InputText v-model="newAd.location" id="location" type="text" required />
         </div>
+        <Editor v-model="newAd.description" editorStyle="height: 320px" />
         <div class="card flex justify-center upload-file">
           <FileUpload mode="basic" name="demo" url="http://localhost:3000/api/upload" accept="image/*" :maxFileSize="1000000"
                       @upload="onUpload" :auto="true" chooseLabel="Browse" />
         </div>
+
         <Button type="submit">Отправить</Button>
       </form>
     </div>
@@ -35,13 +37,17 @@ import Button from 'primevue/button';
 import axios from 'axios';
 import InputText from 'primevue/inputtext';
 import InputNumber from 'primevue/inputnumber';
+import Editor from "primevue/editor";
+import FileUpload from 'primevue/fileupload';
 
 export default {
   name: "PutAdModal",
   components: {
     Button,
     InputText,
-    InputNumber
+    InputNumber,
+    Editor,
+    FileUpload
   },
   props: {
     isVisible: {
@@ -57,7 +63,8 @@ export default {
         category: '',
         location: '',
         date_posted: new Date().toISOString().split('T')[0],
-        image: ''
+        image: '',
+        description: ''
       }
     };
   },
