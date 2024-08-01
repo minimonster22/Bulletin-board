@@ -124,9 +124,9 @@ export default {
     return {
       ads: [],
       layout: 'list',
-      sortKey: null,
-      sortOrder: null,
-      sortField: null,
+      sortKey: {label: 'Сначала новые', value: '!date_posted'},
+      sortOrder: -1,
+      sortField: 'date_posted',
       minPrice: null,
       maxPrice: null,
       filters: {
@@ -141,8 +141,8 @@ export default {
       sortOptions: [
         {label: 'Сначала дорогие', value: '!price'},
         {label: 'Сначала дешевые', value: 'price'},
-        {label: 'Сначала новые', value: 'date_posted'},
-        {label: 'Сначала старые', value: '!date_posted'}
+        {label: 'Сначала старые', value: 'date_posted'},
+        {label: 'Сначала новые', value: '!date_posted'}
       ]
     };
   },

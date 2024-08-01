@@ -269,6 +269,53 @@ app.post('/api/ads', (req, res) => {
     });
 });
 
+// Обновление объявления
+app.put('/api/ads/:id', (req, res) => {
+    const adId = parseInt(req.params.id, 10);
+    const updatedAd = req.body;
+
+    if (!req.session || !req.session.isAuthenticated || !req.session.user) {
+        return res.status(401).send('Not authenticated');
+    }
+
+    fs.readFile(adsFilePath, 'utf8', (err, data) => {
+        if (err) {
+            console.error('Ошибка чтения файла:', err);
+            return res.status(500).send('Ошибка сервера');
+        }
+
+        let ads = [];
+        if (data) {
+            try {
+                ads = JSON.parse(data);
+            } catch (parseErr) {
+                console.error('Ошибка парсинга JSON:', parseErr);
+                return res.status(500).send('Ошибка сервера');
+            }
+        }
+
+        const adIndex = ads.findIndex(ad => ad.id === adId);
+        if (adIndex === -1) {
+            return res.status(404).send('Объявление не найдено');
+        }
+
+        const ad = ads[adIndex];
+        if (ad.user !== req.session.user.username) {
+            return res.status(403).send('Нет прав для редактирования этого объявления');
+        }
+
+        ads[adIndex] = { ...ad, ...updatedAd };
+
+        fs.writeFile(adsFilePath, JSON.stringify(ads, null, 2), 'utf8', (writeErr) => {
+            if (writeErr) {
+                console.error('Ошибка записи файла:', writeErr);
+                return res.status(500).send('Ошибка сервера');
+            }
+
+            res.status(200).send(ads[adIndex]);
+        });
+    });
+});
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

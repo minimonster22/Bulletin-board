@@ -7,6 +7,7 @@
     "category": "Спорт и отдых",
     "location": "Москва",
     "date_posted": "2024-05-01",
+    "description": "Прекрасный велосипед. 2 года ездил",
     "image": "bicycle.jpg"
   },
   {
@@ -17,6 +18,7 @@
     "category": "Недвижимость",
     "location": "Санкт-Петербург",
     "date_posted": "2024-05-02",
+    "description": "Рассматриваю обмен на шоколадку",
     "image": "apartment.jpg"
   },
   {
@@ -27,6 +29,7 @@
     "category": "Электроника",
     "location": "Новосибирск",
     "date_posted": "2024-05-03",
+    "description": "Желательно бесплатно",
     "image": "laptop.jpg"
   },
   {
@@ -37,6 +40,7 @@
     "category": "Детские товары",
     "location": "Екатеринбург",
     "date_posted": "2024-05-04",
+    "description": "Как быстро растут чужие дети...",
     "image": "baby-stroller.jpg"
   },
   {
@@ -47,6 +51,7 @@
     "category": "Недвижимость",
     "location": "Казань",
     "date_posted": "2024-05-05",
+    "description": "Размер - 1 кв.м.",
     "image": "office.jpg"
   },
   {
@@ -57,6 +62,7 @@
     "category": "Транспорт",
     "location": "Нижний Новгород",
     "date_posted": "2024-05-06",
+    "description": "Китайский, а значит надежный",
     "image": "car.jpg"
   },
   {
@@ -67,6 +73,7 @@
     "category": "Дом и сад",
     "location": "Челябинск",
     "date_posted": "2024-05-07",
+    "description": "Слегка винтаж",
     "image": "furniture.jpg"
   },
   {
@@ -77,6 +84,7 @@
     "category": "Работа",
     "location": "Самара",
     "date_posted": "2024-05-08",
+    "description": "Опыт 1 день",
     "image": "programmer.jpg"
   },
   {
@@ -87,6 +95,7 @@
     "category": "Недвижимость",
     "location": "Омск",
     "date_posted": "2024-05-09",
+    "description": "ну или под огород",
     "image": "region.jpg"
   },
   {
@@ -97,13 +106,14 @@
     "category": "Электроника",
     "location": "Ростов-на-Дону",
     "date_posted": "2024-05-10",
+    "description": "Жена заставила продать...",
     "image": "console.jpg"
   },
   {
     "id": 11,
-    "title": "asdfasdf",
-    "price": 546541,
-    "category": "asdfsadf",
+    "title": "56+5",
+    "price": 5465411,
+    "category": "asdfsadf4654",
     "location": "asdfsadf",
     "date_posted": "2024-08-01",
     "image": "d4ccbc03-8cc2-4d73-9765-b2f411b558b9.jpg",
@@ -122,13 +132,13 @@
   },
   {
     "id": 13,
-    "title": "фывпфып",
-    "price": 46542,
-    "category": "фывава",
-    "location": "4894",
+    "title": "sdfsdaf",
+    "price": 23165,
+    "category": "sfdgdfsg",
+    "location": "asdfsdaf",
     "date_posted": "2024-08-01",
     "image": "091aa4a7-be33-4422-a94a-182819ad6f89.jpg",
-    "description": "<p><strong>gasdgи </strong><u>авпивиа </u><em>sdgfsadfg</em></p>",
+    "description": "<p>asdfasdf</p>",
     "user": "tytyty"
   }
 ]
